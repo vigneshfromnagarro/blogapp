@@ -1,6 +1,9 @@
 import { Box, Button, Modal, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import NewPost from "./NewPost";
+import {data} from '../../data/data'
+import BlogCard from "../UI/Card";
+import ViewBlog from "./ViewBlog";
 
 const style = {
     position: 'absolute',
@@ -11,14 +14,13 @@ const style = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4
-    // maxHeight:400,
-    // style: {
-    //     overflowY: 'auto'
-    // }
 };
 
 const Blog = () => {
     const [openNewPost, setOpenNewPost] = useState(false)
+    const [blogData,setBlogData] = useState(data)
+    const [openViewPage,setOpenViewPage] = useState(false)
+    const [viewData,setViewData] = useState([])
 
     const openNewPostHandler = () => {
         setOpenNewPost(true)
@@ -28,10 +30,20 @@ const Blog = () => {
         setOpenNewPost(false)
     }
 
+    const viewClickHandler = (params) => {
+        setOpenViewPage(true)
+        setViewData([params])
+    }
+
+    const navigateHandler = () => {
+        setViewData([])
+        setOpenViewPage(false)
+    }
+
     return (
         <Box>
             <Stack direction="row" mt={2} justifyContent="space-around">
-                <Typography variant="h6">Blog App</Typography>
+                <Typography variant="h5" onClick={navigateHandler} style={{cursor:"pointer"}}>Blog App</Typography>
                 <Button variant="contained" onClick={openNewPostHandler}>New Post</Button>
             </Stack>
             <Modal
@@ -44,6 +56,8 @@ const Blog = () => {
                     <NewPost handleClose={closeNewPostHandler} />
                 </Box>
             </Modal>
+            
+            {openViewPage ? <ViewBlog data={viewData}/> : <BlogCard data={blogData} onClickHandler={viewClickHandler}/>}
         </Box>
     )
 }

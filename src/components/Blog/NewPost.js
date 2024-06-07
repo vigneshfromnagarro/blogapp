@@ -43,7 +43,7 @@ const NewPost = ({ handleClose }) => {
             name="category"
             >
             {categories?.map((category,index)=>{
-                return  <MenuItem  name="category" value={category}>{category}</MenuItem>
+                return  <MenuItem key={index}  name="category" value={category}>{category}</MenuItem>
             })}
         </Select>
         </FormControl>
