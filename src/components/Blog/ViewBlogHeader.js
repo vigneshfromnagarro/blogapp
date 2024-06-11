@@ -22,8 +22,10 @@ const ViewBlogHeader = (props) => {
     const [openEdit , setOpenEdit] = useState(false)
     
     const deleteHandler = () => {
-        const filteredData = data.filter((d,index)=>d.title !== props.data.title)
-        data = filteredData
+        const filteredData = data.filter((d,index)=>{
+            if(d.title !== props.data[0].title){
+                return d
+            }})
         props.setBlogData(filteredData)
         props.handleClose()
     }

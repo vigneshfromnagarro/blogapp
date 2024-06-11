@@ -34,7 +34,6 @@ const Blog = () => {
     const viewClickHandler = (params) => {
         setOpenViewPage(true)
         setViewData([params])
-        console.log(params)
         const selectedIndex = data.map((d,index)=>{
                 if(d.title === params.title && d.category === params.category && d.content === params.content){
                     return index
@@ -65,7 +64,7 @@ const Blog = () => {
                 </Box>
             </Modal>
             
-            {openViewPage ? <ViewBlog index={viewIndex} data={viewData} handleClose={closeNewPostHandler} setBlogData={setBlogData}/> : <BlogCard data={blogData} onClickHandler={viewClickHandler}/>}
+            {openViewPage ? <ViewBlog index={viewIndex} data={viewData} handleClose={()=>setOpenViewPage(false)} setBlogData={setBlogData}/> : <BlogCard data={blogData} onClickHandler={viewClickHandler}/>}
         </Box>
     )
 }
