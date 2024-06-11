@@ -6,10 +6,19 @@ import { data } from "../../data/data";
 const categories = ["sports","cinema","space","business","music","education"]
 
 const EditPost = ({ handleClose,setBlogData,prevdata,index,setViewData,blogData }) => {
-    const [editPostData,setEditPostData] = useState({title:prevdata[0].title,category:prevdata[0].category,content:prevdata[0].content,errors:{title:null,category:null,content:null}})
+    const [editPostData,setEditPostData] = useState({title:prevdata[0].title,category:prevdata[0].category,content:prevdata[0].content})
+
+    const validate = () => {
+        if(editPostData?.title?.length>=1 && editPostData?.category?.length>=1 && editPostData?.content?.length>=1){
+            return true
+        }
+        return false
+    }
 
     const onSubmitHandler = (e) => {
         e.preventDefault()
+         // checking validation
+         if(validate()){
         // edit PostData to the existing blog post
         const {title,category,content} = editPostData
         const filteredPayload = {title,category,content}
@@ -26,6 +35,7 @@ const EditPost = ({ handleClose,setBlogData,prevdata,index,setViewData,blogData 
         setViewData([editPostData])
         setEditPostData({title:editPostData.title,category:editPostData.category,content:editPostData.content,errors:{title:null,category:null,content:null}})
         handleClose()
+      }
     }
 
     const onChangeHandler = (e) => {
@@ -46,7 +56,8 @@ const EditPost = ({ handleClose,setBlogData,prevdata,index,setViewData,blogData 
 
             <form onSubmit={onSubmitHandler}>
 
-            <TextField id="title" label="Title" variant="outlined" onChange={onChangeHandler} value={editPostData?.title} fullWidth/><br/><br/>
+            <TextField id="title" label="Title" variant="outlined" onChange={onChangeHandler} value={editPostData?.title} fullWidth/><br/>
+            {editPostData['title'].length === 0 && <Typography variant="subtitle2" style={{color:"red"}}>Title cannot be empty</Typography>}<br/>
             <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Category</InputLabel>
             <Select
@@ -62,8 +73,11 @@ const EditPost = ({ handleClose,setBlogData,prevdata,index,setViewData,blogData 
             })}
         </Select>
         </FormControl>
-            <br/><br/>
-       <TextAreaInput value={editPostData.content} onChange={onChangeHandler} label="Content" id="content"/><br/><br/>
+            <br/>
+            {editPostData['category'].length === 0 && <Typography variant="subtitle2" style={{color:"red"}}>Category cannot be empty</Typography>}
+            <br/>
+       <TextAreaInput value={editPostData.content} onChange={onChangeHandler} label="Content" id="content"/><br/>
+       {editPostData['content'].length === 0 && <Typography variant="subtitle2" style={{color:"red"}}>Content cannot be empty</Typography>}<br/>
             {/* footer */}
             <Stack direction="row" justifyContent="flex-end" spacing={2}>
             <Button variant="contained" type="submit">Update</Button>

@@ -6,27 +6,39 @@ import {data} from '../../data/data'
 const categories = ["sports","cinema","space","business","music","education"]
 
 const NewPost = ({ handleClose,setBlogData }) => {
-    const [newPostData,setNewPostData] = useState({title:'',category:'',content:'',errors:{title:null,category:null,content:null}})
+    const [newPostData,setNewPostData] = useState({title:'',category:'',content:''})
+
+    const validate = () => {
+        if(newPostData?.title?.length>=1 && newPostData?.category?.length>=1 && newPostData?.content?.length>=1){
+            return true
+        }
+        return false
+    }
 
     const onSubmitHandler = (e) => {
         e.preventDefault()
-        // add newPostData to the existing blog post
-        const {title,category,content} = newPostData
-        const filteredPayload = {title,category,content}
-        setBlogData((prev)=>[...prev,filteredPayload])
-        data.push(filteredPayload)
-        setNewPostData({title:'',category:'',content:'',errors:{title:null,category:null,content:null}})
-        handleClose()
+        // checking validation
+        if(validate()){
+            
+            const {title,category,content} = newPostData
+            const filteredPayload = {title,category,content}
+            setBlogData((prev)=>[...prev,filteredPayload])
+            data.push(filteredPayload)
+            setNewPostData({title:'',category:'',content:''})
+            handleClose()
+        }
     }
+
+   
 
     const onChangeHandler = (e) => {
 
         const {id,name,value} = e.target
+            setNewPostData((prev)=>({
+                ...prev,
+                [id || name]:value
+            }))
 
-        setNewPostData((prev)=>({
-            ...prev,
-            [id || name]:value
-        }))
     }
 
     return (
@@ -37,7 +49,8 @@ const NewPost = ({ handleClose,setBlogData }) => {
 
             <form onSubmit={onSubmitHandler}>
 
-            <TextField id="title" label="Title" variant="outlined" onChange={onChangeHandler} value={newPostData?.title} fullWidth/><br/><br/>
+            <TextField id="title" label="Title" variant="outlined" onChange={onChangeHandler} value={newPostData?.title} fullWidth/><br/>
+            {newPostData['title'].length === 0 && <Typography variant="subtitle2" style={{color:"red"}}>Title cannot be empty</Typography>}<br/>
             <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Category</InputLabel>
             <Select
@@ -53,8 +66,10 @@ const NewPost = ({ handleClose,setBlogData }) => {
             })}
         </Select>
         </FormControl>
-            <br/><br/>
-       <TextAreaInput onChange={onChangeHandler} label="Content" id="content"/><br/><br/>
+        {newPostData['category'].length === 0 && <Typography variant="subtitle2" style={{color:"red"}}>Category cannot be empty</Typography>}
+            <br/>
+       <TextAreaInput onChange={onChangeHandler} label="Content" id="content"/><br/>
+       {newPostData['content'].length === 0 && <Typography variant="subtitle2" style={{color:"red"}}>Content cannot be empty</Typography>}<br/>
             {/* footer */}
             <Stack direction="row" justifyContent="flex-end" spacing={2}>
             <Button variant="contained" type="submit">Submit</Button>
