@@ -4,6 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import Tooltip from '@mui/material/Tooltip';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 const BlogCard = (props) => {
 
@@ -25,6 +26,7 @@ const BlogCard = (props) => {
                     </Typography>
                   </CardContent>
                 </CardActionArea>
+                <Box style={{display:'flex'}}>
                { props?.onClickHandler && <CardActions>
                 <Tooltip title="View">
                   <Button size="small" color="primary" onClick={()=>props.onClickHandler(item)}>
@@ -32,6 +34,12 @@ const BlogCard = (props) => {
                   </Button>
                   </Tooltip>
                 </CardActions>}
+                {item?.like &&  <Tooltip title="Liked">
+                  <Button size="small" color="error">
+                    <ThumbUpIcon/>
+                  </Button>
+                  </Tooltip>}
+                  </Box>
               </Card>
             )
            })} 

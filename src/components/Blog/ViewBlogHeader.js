@@ -31,6 +31,23 @@ const ViewBlogHeader = (props) => {
         props.handleClose()
     }
 
+    const likeHandler = () => {
+        const likedData = []
+        props.blogData.map((d,index)=>{
+            if(d.title === props.data[0].title){
+                d['title'] = props.data[0].title
+                d['category'] = props.data[0].category
+                d['content'] = props.data[0].content
+                d['like'] = true
+                likedData.push(d)
+            }else {
+                likedData.push(d)
+            }
+        })
+        props.setBlogData(likedData)
+        props.handleClose()
+    }
+
     const editHandler = () => {
         setOpenEdit(true)
     }
@@ -42,7 +59,7 @@ const ViewBlogHeader = (props) => {
     return(
         <Box direction="row" justifyContent='end' mr={30} mt={3} style={{display:"flex"}}>
             <Tooltip title="Like">
-                  <Button size="small" color="primary" onClick={()=>{}}>
+                  <Button size="small" color="primary" onClick={likeHandler}>
                     <ThumbUpAltOutlinedIcon/>
                   </Button>
                   </Tooltip>
