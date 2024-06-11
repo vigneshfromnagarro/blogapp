@@ -21,6 +21,7 @@ const Blog = () => {
     const [blogData,setBlogData] = useState(data)
     const [openViewPage,setOpenViewPage] = useState(false)
     const [viewData,setViewData] = useState([])
+    const [viewIndex , setViewIndex] = useState()
 
     const openNewPostHandler = () => {
         setOpenNewPost(true)
@@ -33,6 +34,13 @@ const Blog = () => {
     const viewClickHandler = (params) => {
         setOpenViewPage(true)
         setViewData([params])
+        console.log(params)
+        const selectedIndex = data.map((d,index)=>{
+                if(d.title === params.title && d.category === params.category && d.content === params.content){
+                    return index
+                }
+        })
+        setViewIndex(selectedIndex)
     }
 
     const navigateHandler = () => {
@@ -53,11 +61,11 @@ const Blog = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <NewPost handleClose={closeNewPostHandler} />
+                    <NewPost handleClose={closeNewPostHandler} setBlogData={setBlogData}/>
                 </Box>
             </Modal>
             
-            {openViewPage ? <ViewBlog data={viewData}/> : <BlogCard data={blogData} onClickHandler={viewClickHandler}/>}
+            {openViewPage ? <ViewBlog index={viewIndex} data={viewData} handleClose={closeNewPostHandler} setBlogData={setBlogData}/> : <BlogCard data={blogData} onClickHandler={viewClickHandler}/>}
         </Box>
     )
 }
