@@ -34,12 +34,13 @@ const Blog = () => {
     const viewClickHandler = (params) => {
         setOpenViewPage(true)
         setViewData([params])
-        const selectedIndex = data.map((d,index)=>{
+        let i ;
+        blogData.map((d,index)=>{
                 if(d.title === params.title && d.category === params.category && d.content === params.content){
-                    return index
+                    i = index
                 }
         })
-        setViewIndex(selectedIndex)
+        setViewIndex(i)
     }
 
     const navigateHandler = () => {
@@ -64,7 +65,7 @@ const Blog = () => {
                 </Box>
             </Modal>
             
-            {openViewPage ? <ViewBlog index={viewIndex} data={viewData} setViewData={setViewData} handleClose={()=>setOpenViewPage(false)} setBlogData={setBlogData}/> : <BlogCard data={blogData} onClickHandler={viewClickHandler}/>}
+            {openViewPage ? <ViewBlog index={viewIndex} data={viewData} setViewData={setViewData} handleClose={()=>setOpenViewPage(false)} setBlogData={setBlogData} blogData={blogData}/> : <BlogCard data={blogData} onClickHandler={viewClickHandler}/>}
         </Box>
     )
 }

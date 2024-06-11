@@ -1,11 +1,11 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography } from "@mui/material"
 import { useState } from "react";
 import TextAreaInput from "../UI/Input/Textarea";
-import {data} from '../../data/data'
+import { data } from "../../data/data";
 
 const categories = ["sports","cinema","space","business","music","education"]
 
-const EditPost = ({ handleClose,setBlogData,prevdata,index,setViewData }) => {
+const EditPost = ({ handleClose,setBlogData,prevdata,index,setViewData,blogData }) => {
     const [editPostData,setEditPostData] = useState({title:prevdata[0].title,category:prevdata[0].category,content:prevdata[0].content,errors:{title:null,category:null,content:null}})
 
     const onSubmitHandler = (e) => {
@@ -15,12 +15,13 @@ const EditPost = ({ handleClose,setBlogData,prevdata,index,setViewData }) => {
         const filteredPayload = {title,category,content}
         const edited = []
         data.map((d,i)=>{
-            if(i === index[0]){
+            if(i === index){
                 edited.push(filteredPayload)
             }else {
                 edited.push(d)
             }
         })
+        data[index] = {title:editPostData.title,category:editPostData.category,content:editPostData.content}
         setBlogData(edited)
         setViewData([editPostData])
         setEditPostData({title:editPostData.title,category:editPostData.category,content:editPostData.content,errors:{title:null,category:null,content:null}})

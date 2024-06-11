@@ -22,10 +22,11 @@ const ViewBlogHeader = (props) => {
     const [openEdit , setOpenEdit] = useState(false)
     
     const deleteHandler = () => {
-        const filteredData = data.filter((d,index)=>{
+        const filteredData = props.blogData.filter((d,index)=>{
             if(d.title !== props.data[0].title){
                 return d
             }})
+        data.splice(props.index,1)
         props.setBlogData(filteredData)
         props.handleClose()
     }
@@ -63,7 +64,7 @@ const ViewBlogHeader = (props) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <EditPost index={props.index} prevdata={props.data} setViewData={props.setViewData} setBlogData={props.setBlogData}  handleClose={closeEditModalHandler}/>
+                    <EditPost index={props.index} prevdata={props.data} setViewData={props.setViewData} setBlogData={props.setBlogData} blogData={props.blogData}  handleClose={closeEditModalHandler}/>
                 </Box>
             </Modal>
 
