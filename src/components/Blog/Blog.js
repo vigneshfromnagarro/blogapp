@@ -64,7 +64,7 @@ const Blog = () => {
                 </Box>
             </Modal>
             
-            {openViewPage ? <ViewBlog index={viewIndex} data={viewData} handleClose={()=>setOpenViewPage(false)} setBlogData={setBlogData}/> : <BlogCard data={blogData} onClickHandler={viewClickHandler}/>}
+            {openViewPage ? <ViewBlog index={viewIndex} data={viewData} setViewData={setViewData} handleClose={()=>setOpenViewPage(false)} setBlogData={setBlogData}/> : <BlogCard data={blogData} onClickHandler={viewClickHandler}/>}
         </Box>
     )
 }

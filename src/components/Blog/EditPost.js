@@ -5,7 +5,7 @@ import {data} from '../../data/data'
 
 const categories = ["sports","cinema","space","business","music","education"]
 
-const EditPost = ({ handleClose,setBlogData,prevdata,index }) => {
+const EditPost = ({ handleClose,setBlogData,prevdata,index,setViewData }) => {
     const [editPostData,setEditPostData] = useState({title:prevdata[0].title,category:prevdata[0].category,content:prevdata[0].content,errors:{title:null,category:null,content:null}})
 
     const onSubmitHandler = (e) => {
@@ -15,15 +15,15 @@ const EditPost = ({ handleClose,setBlogData,prevdata,index }) => {
         const filteredPayload = {title,category,content}
         const edited = []
         data.map((d,i)=>{
-            if(i === index){
+            if(i === index[0]){
                 edited.push(filteredPayload)
             }else {
                 edited.push(d)
             }
         })
         setBlogData(edited)
-        data[index] = filteredPayload
-        setEditPostData({title:prevdata.title,category:prevdata.category,content:prevdata.content,errors:{title:null,category:null,content:null}})
+        setViewData([editPostData])
+        setEditPostData({title:editPostData.title,category:editPostData.category,content:editPostData.content,errors:{title:null,category:null,content:null}})
         handleClose()
     }
 

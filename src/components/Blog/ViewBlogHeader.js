@@ -63,7 +63,7 @@ const ViewBlogHeader = (props) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <EditPost index={props.index} prevdata={props.data} setBlogData={props.setBlogData}  handleClose={closeEditModalHandler}/>
+                    <EditPost index={props.index} prevdata={props.data} setViewData={props.setViewData} setBlogData={props.setBlogData}  handleClose={closeEditModalHandler}/>
                 </Box>
             </Modal>
 
