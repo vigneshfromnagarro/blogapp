@@ -1,9 +1,8 @@
 import { Box, Button, Modal, Stack, Typography } from "@mui/material";
-import { useState } from "react";
 import NewPost from "./NewPost";
-import {data} from '../../data/data'
 import BlogCard from "../UI/Card";
 import ViewBlog from "./ViewBlog";
+import { useAllBlogData } from "../../context/BlogContext";
 
 const style = {
     position: 'absolute',
@@ -17,36 +16,15 @@ const style = {
 };
 
 const Blog = () => {
-    const [openNewPost, setOpenNewPost] = useState(false)
-    const [blogData,setBlogData] = useState(data)
-    const [openViewPage,setOpenViewPage] = useState(false)
-    const [viewData,setViewData] = useState([])
-    const [viewIndex , setViewIndex] = useState()
-
-    const openNewPostHandler = () => {
-        setOpenNewPost(true)
-    }
-
-    const closeNewPostHandler = () => {
-        setOpenNewPost(false)
-    }
-
-    const viewClickHandler = (params) => {
-        setOpenViewPage(true)
-        setViewData([params])
-        let i ;
-        blogData.map((d,index)=>{
-                if(d.title === params.title && d.category === params.category && d.content === params.content){
-                    i = index
-                }
-        })
-        setViewIndex(i)
-    }
-
-    const navigateHandler = () => {
-        setViewData([])
-        setOpenViewPage(false)
-    }
+    
+    const { openNewPost,
+        blogData,
+        openViewPage,
+        viewData,
+        openNewPostHandler,
+        closeNewPostHandler,
+        viewClickHandler,
+        navigateHandler} = useAllBlogData()
 
     return (
         <Box>
@@ -61,11 +39,11 @@ const Blog = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <NewPost handleClose={closeNewPostHandler} setBlogData={setBlogData}/>
+                    <NewPost/>
                 </Box>
             </Modal>
             
-            {openViewPage ? <ViewBlog index={viewIndex} data={viewData} setViewData={setViewData} handleClose={()=>setOpenViewPage(false)} setBlogData={setBlogData} blogData={blogData}/> : <BlogCard data={blogData} onClickHandler={viewClickHandler}/>}
+            {openViewPage ? <ViewBlog data={viewData}/> : <BlogCard data={blogData} onClickHandler={viewClickHandler}/>}
         </Box>
     )
 }

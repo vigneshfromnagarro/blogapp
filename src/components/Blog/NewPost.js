@@ -4,16 +4,18 @@ import TextAreaInput from "../UI/Input/Textarea";
 import {data} from '../../data/data';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAllBlogData } from "../../context/BlogContext";
 
 const categories = ["sports","cinema","space","business","music","education"]
 
-const NewPost = ({ handleClose,setBlogData }) => {
+const NewPost = () => {
     const [newPostData,setNewPostData] = useState({title:'',category:'',content:''})
+    const {handleClose,setBlogData,closeNewPostHandler} = useAllBlogData()
 
     const notify = () => toast.success("Post added successfully!",{
         autoClose:1000,
         onClose:()=>{
-            handleClose()
+            closeNewPostHandler()
         }
     });
 

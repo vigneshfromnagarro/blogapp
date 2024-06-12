@@ -8,6 +8,7 @@ import { useState } from "react";
 import EditPost from "./EditPost";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAllBlogData } from "../../context/BlogContext";
 
 const style = {
     position: 'absolute',
@@ -20,41 +21,42 @@ const style = {
     p: 4
 };
 
-const ViewBlogHeader = (props) => {
+const ViewBlogHeader = () => {
     const [openEdit , setOpenEdit] = useState(false)
+    const {blogData,viewData,index,setBlogData,setOpenViewPage} = useAllBlogData()
 
     const notify = () => toast.success("Post deleted successfully!",{
         autoClose:1000,
         onClose:()=>{
-            props.handleClose()
+            setOpenViewPage(false)
         }
     });
     
     const deleteHandler = () => {
-        const filteredData = props.blogData.filter((d,index)=>{
-            if(d.title !== props.data[0].title){
+        const filteredData = blogData.filter((d,index)=>{
+            if(d.title !== viewData[0].title){
                 return d
             }})
-        data.splice(props.index,1)
-        props.setBlogData(filteredData)
+        data.splice(index,1)
+        setBlogData(filteredData)
         notify()
     }
 
     const likeHandler = () => {
         const likedData = []
-        props.blogData.map((d,index)=>{
-            if(d.title === props.data[0].title){
-                d['title'] = props.data[0].title
-                d['category'] = props.data[0].category
-                d['content'] = props.data[0].content
+        blogData.map((d,index)=>{
+            if(d.title === viewData[0].title){
+                d['title'] = viewData[0].title
+                d['category'] = viewData[0].category
+                d['content'] = viewData[0].content
                 d['like'] = true
                 likedData.push(d)
             }else {
                 likedData.push(d)
             }
         })
-        props.setBlogData(likedData)
-        props.handleClose()
+        setBlogData(likedData)
+        setOpenViewPage(false)
     }
 
     const editHandler = () => {
@@ -90,7 +92,7 @@ const ViewBlogHeader = (props) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <EditPost index={props.index} prevdata={props.data} setViewData={props.setViewData} setBlogData={props.setBlogData} blogData={props.blogData}  handleClose={closeEditModalHandler}/>
+                    <EditPost handleClose={closeEditModalHandler}/>
                 </Box>
             </Modal>
             <ToastContainer/>

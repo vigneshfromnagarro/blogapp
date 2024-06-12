@@ -4,11 +4,13 @@ import TextAreaInput from "../UI/Input/Textarea";
 import { data } from "../../data/data";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAllBlogData } from "../../context/BlogContext";
 
 const categories = ["sports","cinema","space","business","music","education"]
 
-const EditPost = ({ handleClose,setBlogData,prevdata,index,setViewData,blogData }) => {
-    const [editPostData,setEditPostData] = useState({title:prevdata[0].title,category:prevdata[0].category,content:prevdata[0].content})
+const EditPost = ({ handleClose }) => {
+    const {viewData,setBlogData,viewIndex,setViewData} = useAllBlogData()
+    const [editPostData,setEditPostData] = useState({title:viewData[0].title,category:viewData[0].category,content:viewData[0].content})
 
     const notify = () => toast.success("Post edited successfully!",{
         autoClose:1000,
@@ -32,13 +34,13 @@ const EditPost = ({ handleClose,setBlogData,prevdata,index,setViewData,blogData 
         const {title,category,content} = editPostData
         const edited = []
         data.map((d,i)=>{
-            if(i === index){
+            if(i === viewIndex){
                 edited.push({title,category,content,like:d.like})
             }else {
                 edited.push(d)
             }
         })
-        data[index] = {title:editPostData.title,category:editPostData.category,content:editPostData.content,like:data[index]['like']}
+        data[viewIndex] = {title:editPostData.title,category:editPostData.category,content:editPostData.content,like:data[viewIndex]['like']}
         setBlogData(edited)
         setViewData([editPostData])
         setEditPostData({title:editPostData.title,category:editPostData.category,content:editPostData.content,errors:{title:null,category:null,content:null}})
@@ -76,8 +78,8 @@ const EditPost = ({ handleClose,setBlogData,prevdata,index,setViewData,blogData 
             onChange={onChangeHandler}
             name="category"
             >
-            {categories?.map((category,index)=>{
-                return  <MenuItem key={index}  name="category" value={category}>{category}</MenuItem>
+            {categories?.map((category,viewIndex)=>{
+                return  <MenuItem key={viewIndex}  name="category" value={category}>{category}</MenuItem>
             })}
         </Select>
         </FormControl>
