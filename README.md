@@ -38,6 +38,12 @@ Here user can create a new blog post . No field should be left blank here .
 
 Added a proper acknowledgement message here on creating , deleting and editing post
 
+# Application Perfomance
+
+Scored 100/100 on Lighthouse Tool's performance
+
+![image](https://github.com/vigneshfromnagarro/blogapp/assets/171919067/353ab973-0f84-485e-b198-69e9dd471248)
+
 
 
 
