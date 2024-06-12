@@ -1,5 +1,8 @@
 # Welcome to Blog Application
 
+This application is accessible at https://vignesh-3213563.surge.sh/
+
+
 This Application allow users to 
 1.Create a blog post
 2.Edit a blog post
