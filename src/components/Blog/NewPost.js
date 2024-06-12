@@ -10,7 +10,7 @@ const categories = ["sports","cinema","space","business","music","education"]
 
 const NewPost = () => {
     const [newPostData,setNewPostData] = useState({title:'',category:'',content:''})
-    const {handleClose,setBlogData,closeNewPostHandler} = useAllBlogData()
+    const {setBlogData,closeNewPostHandler} = useAllBlogData()
 
     const notify = () => toast.success("Post added successfully!",{
         autoClose:1000,
@@ -84,7 +84,7 @@ const NewPost = () => {
             {/* footer */}
             <Stack direction="row" justifyContent="flex-end" spacing={2}>
             <Button variant="contained" type="submit">Submit</Button>
-            <Button variant="contained" onClick={handleClose}>Close</Button>
+            <Button variant="contained" onClick={closeNewPostHandler}>Close</Button>
             </Stack>
             
             </form>
