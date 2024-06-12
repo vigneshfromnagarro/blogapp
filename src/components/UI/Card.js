@@ -10,7 +10,7 @@ const BlogCard = (props) => {
 
     return(
         <Box style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
-           {props.data.map((item,index)=>{
+           {props?.data?.map((item,index)=>{
             return(
                 <Card key={index} sx={{ width: 750,marginTop:"10px" }}>
                 <CardActionArea>

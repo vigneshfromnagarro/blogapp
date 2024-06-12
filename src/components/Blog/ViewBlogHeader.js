@@ -6,6 +6,8 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import {data} from '../../data/data';
 import { useState } from "react";
 import EditPost from "./EditPost";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const style = {
     position: 'absolute',
@@ -20,6 +22,13 @@ const style = {
 
 const ViewBlogHeader = (props) => {
     const [openEdit , setOpenEdit] = useState(false)
+
+    const notify = () => toast.success("Post deleted successfully!",{
+        autoClose:1000,
+        onClose:()=>{
+            props.handleClose()
+        }
+    });
     
     const deleteHandler = () => {
         const filteredData = props.blogData.filter((d,index)=>{
@@ -28,7 +37,7 @@ const ViewBlogHeader = (props) => {
             }})
         data.splice(props.index,1)
         props.setBlogData(filteredData)
-        props.handleClose()
+        notify()
     }
 
     const likeHandler = () => {
@@ -84,7 +93,7 @@ const ViewBlogHeader = (props) => {
                     <EditPost index={props.index} prevdata={props.data} setViewData={props.setViewData} setBlogData={props.setBlogData} blogData={props.blogData}  handleClose={closeEditModalHandler}/>
                 </Box>
             </Modal>
-
+            <ToastContainer/>
         </Box>
     )
 }

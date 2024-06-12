@@ -1,12 +1,21 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography } from "@mui/material"
 import { useState } from "react";
 import TextAreaInput from "../UI/Input/Textarea";
-import {data} from '../../data/data'
+import {data} from '../../data/data';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const categories = ["sports","cinema","space","business","music","education"]
 
 const NewPost = ({ handleClose,setBlogData }) => {
     const [newPostData,setNewPostData] = useState({title:'',category:'',content:''})
+
+    const notify = () => toast.success("Post added successfully!",{
+        autoClose:1000,
+        onClose:()=>{
+            handleClose()
+        }
+    });
 
     const validate = () => {
         if(newPostData?.title?.length>=1 && newPostData?.category?.length>=1 && newPostData?.content?.length>=1){
@@ -25,7 +34,7 @@ const NewPost = ({ handleClose,setBlogData }) => {
             setBlogData((prev)=>[...prev,filteredPayload])
             data.push(filteredPayload)
             setNewPostData({title:'',category:'',content:''})
-            handleClose()
+            notify()
         }
     }
 
@@ -67,7 +76,7 @@ const NewPost = ({ handleClose,setBlogData }) => {
         </Select>
         </FormControl>
         {newPostData['category'].length === 0 && <Typography variant="subtitle2" style={{color:"red"}}>Category cannot be empty</Typography>}
-            <br/>
+            <br/><br/>
        <TextAreaInput onChange={onChangeHandler} label="Content" id="content"/><br/>
        {newPostData['content'].length === 0 && <Typography variant="subtitle2" style={{color:"red"}}>Content cannot be empty</Typography>}<br/>
             {/* footer */}
@@ -77,7 +86,7 @@ const NewPost = ({ handleClose,setBlogData }) => {
             </Stack>
             
             </form>
-
+        <ToastContainer/>
         </Box>
     )
 }
