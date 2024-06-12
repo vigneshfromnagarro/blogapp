@@ -1,6 +1,6 @@
 # Welcome to Blog Application
 
-This application is accessible at https://vignesh-3213563.surge.sh/
+This application is accessible at https://vignesh3213563.surge.sh/
 
 
 This Application allow users to 
